@@ -1,0 +1,85 @@
+https://leetcode.com/problems/kth-largest-element-in-a-stream/
+
+
+
+class KthLargest {
+private:
+struct TreeNode{
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    int num;
+    TreeNode(int res){
+        val = res;
+        num = 1;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+TreeNode* main = nullptr;
+    
+TreeNode* insert(TreeNode* root, int val){
+    if(!root){
+        if(!main){
+            main = new TreeNode(val);
+            return main;
+        }
+        return new TreeNode(val); 
+    }
+    else if(root->val > val){
+        root->num += 1;
+        root->left = insert(root->left,val);
+        return root;
+    }
+    else{
+        root->num += 1;
+        root->right = insert(root->right,val);
+        return root;
+    }
+}
+    
+int serch(TreeNode* root, int k){
+    int sum;
+    if(root->right){
+        //cout << root->num << "  "<<root->val<<endl;
+        sum = root->right->num + 1;
+        if(sum == k){
+            return root->val;
+        }
+        else if(k > sum){
+            return serch(root->left, k - sum);
+        }
+        else{
+            return serch(root->right,k);
+        }
+    }
+    if(k == 1){return root->val;}
+    else{return serch(root->left,k-1);}
+}
+    
+// void print(TreeNode* root){
+//     cout << root->val << "  " << root->num <<endl;
+//     if(root->left){print(root->left);}
+//     if(root->right){print(root->right);}
+// }
+public:
+    int large;
+    KthLargest(int k, vector<int>& nums) {
+        //main = new TreeNode(nums[0]);
+        for(int i = 0; i < nums.size(); i++){
+            insert(main,nums[i]);
+        }
+        large = k;
+    }
+    
+    int add(int val) {
+        insert(main,val);
+        return serch(main,large);
+    }
+};
+
+/**
+ * Your KthLargest object will be instantiated and called as such:
+ * KthLargest* obj = new KthLargest(k, nums);
+ * int param_1 = obj->add(val);
+ */

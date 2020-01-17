@@ -1,0 +1,37 @@
+https://leetcode.com/problems/camelcase-matching/
+
+
+
+class Solution {
+public:
+    vector<bool> camelMatch(vector<string>& v, string s) {
+        vector<bool> bo;
+    for(int  i = 0; i < v.size(); i++){
+        int k = 0;
+        bool b = false;
+        for(int  j = 0; j < v[i].length(); j++){
+            if(v[i][j] == s[k] && (v[i].length() - j >= s.length() - k )){
+                while (s[k] == v[i][j] && k < s.length()) {
+                    k++;
+                    j++;
+                }
+                if(k == s.length()){
+                    b = true;
+                }else if(k == s.length() - 1 && s[k] < 91 && j == v[i].length() - 1 && v[i][j] != s[k]){
+                    b = false;
+                    break;
+                }
+                else{
+                    b = false;
+                }
+            }
+            else if (v[i][j] <= 90 && s[k] != v[i][j]){
+                b = false;
+                break;
+            }
+        }
+        bo.push_back(b);
+    }
+        return bo;
+    }
+};

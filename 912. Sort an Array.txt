@@ -1,0 +1,34 @@
+https://leetcode.com/problems/sort-an-array/
+
+
+
+class Solution {
+private:
+    int partition(vector<int>& nums, int start, int end){
+        int i = start - 1;
+        
+        while(start < end){
+            if(nums[start] < nums[end]){
+                i++;
+                swap(nums[start],nums[i]);
+            }
+            start++;
+        }
+        
+        swap(nums[end],nums[++i]);
+        return i;
+    }
+    void QuickSort(vector<int>& nums,int start,int end){
+        if(end > start){
+            int pivot = partition(nums,start, end);
+            QuickSort(nums,start,pivot - 1);
+            QuickSort(nums,pivot + 1,end);
+        }
+    }
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        //cout << partition(nums,0,nums.size() - 1);
+        QuickSort(nums,0,nums.size() - 1);
+        return nums;
+    }
+};

@@ -1,0 +1,31 @@
+https://leetcode.com/problems/relative-sort-array/
+
+
+
+class Solution {
+public:
+    vector<int> relativeSortArray(vector<int>& v, vector<int>& vec) {
+        vector<int> v3;
+    
+    if(vec.size() == 0){
+        return v;
+    }
+    for(int i =0 ; i < vec.size(); i++){
+        for(int j = 0; j < v.size(); j++){
+            if(vec[i] == v[j]){
+                v3.push_back(vec[i]);
+                v[j] = -321;
+            }
+        }
+    }
+    
+    
+    sort(v.begin(),v.end());
+    for(int i = 0; i < v.size();i++){
+        if(v[i] != -321){
+            v3.push_back(v[i]);
+        }
+    }
+        return v3;
+    }
+};

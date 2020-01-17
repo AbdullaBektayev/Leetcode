@@ -1,0 +1,78 @@
+https://leetcode.com/problems/available-captures-for-rook/
+
+
+
+class Solution {
+public:
+    int numRookCaptures(vector<vector<char>>& board) {
+    int row = 0;
+    int coulmn = 0;
+    bool b = false;
+    bool top = false;
+    bool bottom = false;
+    int sum = 0;
+    for(int i = 0; i < board.size(); i++){
+        for(int j = 0; j < board[i].size(); j++ ){
+            if(board[i][j]== 'R' && b == false){
+                row  = i;
+                coulmn = j;
+                b = true;
+            }
+            else if(b == true && board[i][j] == 'B'){
+                if(j == coulmn){
+                    bottom = true;
+                    break;
+                }
+                else if(i == row){
+                    break;
+                }
+            }
+            else if(b == true && board[i][j] == 'p'){
+                if(j == coulmn&& bottom == false){
+                    sum++;
+                    bottom = true;
+                    break;
+                }
+                else if(j == coulmn && bottom == true){
+                    break;
+                }
+                else if(i == row){
+                    sum++;
+                    break;
+                }
+            }
+        }
+    }
+    
+    int num = coulmn;
+    for(int i = row; i >= 0; i--){
+        for(int j = num; j >= 0; j-- ){
+            if(board[i][j] == 'B'){
+                if(j == coulmn){
+                    top = true;
+                    break;
+                }
+                else if(i == row){
+                    break;
+                }
+            }
+            else if(board[i][j] == 'p'){
+                if(j == coulmn && top == false){
+                    sum++;
+                    top = true;
+                    break;
+                }
+                else if(j == coulmn && top == true){
+                    break;
+                }
+                else if(i == row){
+                    sum++;
+                    break;
+                }
+            }
+        }
+        num = board[i].size() - 1;
+    }
+    return sum;
+    }
+};

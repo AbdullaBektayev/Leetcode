@@ -1,0 +1,22 @@
+
+1027. Longest Arithmetic Sequence
+
+
+
+class Solution {
+public:
+    int longestArithSeqLength(vector<int>& A) {
+        if(A.size() == 0)
+            return 0;
+        unordered_map<int,unordered_map<int,int>> dp;
+        int maxCount = 0;
+        for(int i = 0; i < A.size(); i++){
+            for(int j = i + 1; j < A.size(); j++){
+                int dif = A[j] - A[i];
+                dp[dif][j] = dp[dif].count(i) ? dp[dif][i] + 1 : 2;
+                maxCount = max(maxCount,dp[dif][j]);
+            }
+        }
+        return maxCount;
+    }
+};

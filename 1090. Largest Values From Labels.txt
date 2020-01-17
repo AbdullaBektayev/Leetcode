@@ -1,0 +1,40 @@
+
+https://leetcode.com/problems/largest-values-from-labels/
+
+
+
+
+class Solution {
+public:
+    int largestValsFromLabels(vector<int>& values, vector<int>& labels, int num_wanted, int use_limit) {
+        int size = labels.size();
+        if(size == 0)
+            return 0;
+        pair<int,int> p[size];
+        for(int i = 0; i < labels.size(); i++){
+            p[i].first = labels[i];
+            p[i].second = values[i];
+        }
+        sort(p,p+size,myComp);
+        // for(int i = 0; i < labels.size(); i++){
+        //     cout << p[i].first<<"  "<< p[i].second<<endl;
+        // }
+        unordered_map<int,int> mp;
+        int sum = 0;
+        for(int i = 0; i < size; i++){
+            if(mp[p[i].first] < use_limit){
+                mp[p[i].first]++;
+                num_wanted--;
+                sum += p[i].second;
+                if(num_wanted <= 0)
+                    break;
+            }
+        }
+        
+        return sum;
+    }
+    
+    static bool myComp(pair<int,int> p1, pair<int,int> p2){
+        return p1.second > p2.second;
+    }
+};

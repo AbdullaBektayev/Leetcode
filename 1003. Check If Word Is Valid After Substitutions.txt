@@ -1,0 +1,51 @@
+https://leetcode.com/problems/check-if-word-is-valid-after-substitutions/
+
+
+
+
+class Solution {
+  public:
+  Solution() {
+    
+    std::ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+  }
+  
+  
+  bool isValid(string S) {
+    
+    if (S.size() % 3 || (not S.empty() and S[0] != 'a')) {
+      return false;
+    }
+
+    stack<char> stk;
+    
+    for (auto c : S) {
+      
+      if(c == 'a')
+      {
+        stk.push(c);
+      }
+      else if(c == 'b')
+      {
+        stk.push(c);
+      }
+      else
+      {
+        if(stk.empty() || stk.top() != 'b')
+        {
+          return false;
+        }
+        stk.pop();
+        if(stk.empty() || stk.top() != 'a')
+        {
+          return false;
+        }
+        stk.pop();
+      }
+    }
+  
+    return stk.size()==0;
+  }
+};

@@ -1,0 +1,25 @@
+https://leetcode.com/problems/robot-bounded-in-circle/
+
+
+
+
+class Solution {
+public:
+    bool isRobotBounded(string instructions) {
+         int turn = 0;
+        int x = 0;
+        int y = 0;
+        for (char i: instructions){
+            if(i == 'L') turn++;
+            if(i == 'R') turn+=3;
+            if(i == 'G' && turn%4 == 0) y++;
+            if(i == 'G' && turn%4 == 1) x--;
+            if(i == 'G' && turn%4 == 2) y--;
+            if(i == 'G' && turn%4 == 3) x++;
+        }
+        if(x==0 && y==0) return true;
+        if(turn%4 == 0 && (y||x)) return false;
+        if(turn%4 == 2) return true;
+        return true;
+    }
+};
