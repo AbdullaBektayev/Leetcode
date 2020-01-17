@@ -1,0 +1,23 @@
+https://leetcode.com/problems/generate-parentheses/
+
+class Solution {
+private:
+    vector<string> res;
+    void generate(int n, int op, int end,int sum,string s){
+        if(sum == 0){
+            res.push_back(s);
+            return;
+        }
+        if(op < n/2){
+            generate(n,op+1,end,sum-1,s + "(");
+        }
+        if(end < op){
+            generate(n,op,end + 1,sum-1,s + ")");
+        }
+    }
+public:
+    vector<string> generateParenthesis(int n) {
+        generate(n*2,0,0,n*2,"");
+        return res;
+    }
+};

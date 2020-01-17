@@ -1,0 +1,54 @@
+https://leetcode.com/problems/perfect-squares/
+
+
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> vec = next(n);
+        queue<int> bfs;
+        for(int i = 0; i < vec.size(); i++){
+            if(vec[i] == n){
+                return 1;
+            }
+            bfs.push(vec[i]);
+        }
+        unordered_set<int> visited;
+        int size;
+        int step = 1;
+        vector<int> temp;
+        int now;
+        while(!bfs.empty()){
+            size = bfs.size();
+            step++;
+            for(int i = 0; i < size; i++){
+                int cur = bfs.front();
+                bfs.pop();
+                temp = next(n - cur);
+                for(int i = 0; i < temp.size(); i++){
+                    now = cur + temp[i];
+                    if(now == n){
+                        return step;
+                    }
+                    else if(visited.count(now)){
+                        continue;
+                    }
+                    else if(now < n){
+                        bfs.push(now);
+                        visited.insert(now);
+                    }
+                }
+            }
+        }
+        return 1;
+    }
+    
+    vector<int> next(int x){
+        int a = 1;
+        vector<int> res;
+        for(int i = 2; a <= x; i++ ){
+            res.push_back(a);
+            a = i*i;
+        }
+        return res;
+    }
+};

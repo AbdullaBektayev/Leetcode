@@ -1,0 +1,44 @@
+https://leetcode.com/problems/n-queens-ii/
+
+class Solution {
+private:
+    int sum = 0;
+    
+    void change(int row, int col, vector<vector<int>>& res,int n){
+        for(int i = 0; i < n; i++){
+            res[row][i] = 1;
+            res[i][col] = 1;
+            if(row - i > -1){
+                if(col - i > -1)
+                    res[row-i][col-i] = 1;
+                if(col + i < n)
+                    res[row-i][col+i] = 1;
+            }
+            if(row + i < n){
+                if(col + i < n)
+                    res[row+i][col+i] = 1;
+                if(col - i > -1)
+                    res[row+i][col-i] = 1;
+            }
+        }
+    }
+    
+    void backtrack(vector<vector<int>> res, int row,int n){
+        if(row == n){sum++;return;}
+        vector<vector<int>> temp = res;
+        
+        for(int j = 0; j < n; j++){
+            if(res[row][j] == 0){
+                change(row,j,res,n);
+                backtrack(res,row+1,n);
+                res = temp;
+            }
+        }
+    }
+public:
+    int totalNQueens(int n) {
+        vector<vector<int>> res(n,vector<int> (n));
+        backtrack(res,0,n);
+        return sum;
+    }
+};

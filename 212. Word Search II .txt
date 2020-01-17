@@ -1,0 +1,56 @@
+https://leetcode.com/problems/word-search-ii/
+
+class Solution {
+private:
+    vector<string> res;
+    unordered_set<string> set;
+    struct Trie{
+        Trie* data[26];
+        string word = "";
+    };
+    Trie* head = new Trie();
+    
+    void insert(string str){
+        Trie* cur = head;
+        for(char s : str){
+            int idx = s - 'a';
+            if(!cur->data[idx]){cur->data[idx] = new Trie();}
+            cur = cur->data[idx];
+        }
+        cur->word = str;
+    }
+    
+    void search(Trie* root, int i, int j,int row,int coulmn,vector<vector<char>>& board){
+        if(root->word != "" && !set.count(root->word)){
+            res.push_back(root->word);
+            set.insert(root->word);
+        }
+        if(i >= row || i < 0 || j >= coulmn || j < 0 || board[i][j] == '-'){return;}
+        char temp = board[i][j];
+        int idx = board[i][j] - 'a';
+        board[i][j] = '-';
+        if(root->data[idx]){
+            search(root->data[idx],i + 1,j,row,coulmn,board);
+            search(root->data[idx],i - 1,j,row,coulmn,board);
+            search(root->data[idx],i,j + 1,row,coulmn,board);
+            search(root->data[idx],i,j - 1,row,coulmn,board);
+        }
+        board[i][j] = temp;
+    }
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        if(words.size() == 0 || board.size() == 0){return res;}
+        for(string w : words){
+            insert(w);
+        }
+        int row = board.size();
+        int coulmn = board[0].size();
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < coulmn; j++){
+                int idx = board[i][j] - 'a';
+                if(head->data[idx]){search(head,i,j,row,coulmn,board);}
+            }
+        }
+        return res;
+    }
+};

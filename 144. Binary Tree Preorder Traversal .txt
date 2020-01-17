@@ -1,0 +1,26 @@
+https://leetcode.com/problems/binary-tree-preorder-traversal/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    void pre(TreeNode* root, vector<int>& vec){
+        vec.push_back(root->val);
+        if(root->left){pre(root->left,vec);}
+        if(root->right){pre(root->right,vec);}
+    }
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> vec;
+        if(!root){return vec;};
+        pre(root,vec);
+        return vec;
+    }
+};

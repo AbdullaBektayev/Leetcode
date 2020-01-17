@@ -1,0 +1,30 @@
+https://leetcode.com/problems/balanced-binary-tree/
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    bool ch = true;
+    int isBalance(TreeNode* root){
+        if(!root){return 1;}
+        int left = isBalance(root->left) + 1;
+        int right = isBalance(root->right) + 1;
+        if(abs(left - right) > 1){
+            ch = false;
+        }
+        return max(left , right);
+    } 
+public:
+    bool isBalanced(TreeNode* root) {
+        isBalance(root);
+        return ch;
+    }
+};

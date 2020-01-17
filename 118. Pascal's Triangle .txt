@@ -1,0 +1,24 @@
+https://leetcode.com/problems/pascals-triangle/
+
+
+class Solution {
+private:
+    void tringo(vector<vector<int>> &res, int row,int& num){
+        if(row == num){return;}
+        vector<int> temp(row+1);
+        temp[0] = 1;
+        temp[row] = 1;
+        for(int j = 1; j < row; j++){
+            temp[j] = res[row-1][j] + res[row-1][j-1];
+        }
+        res.push_back(temp);
+        tringo(res,row + 1, num);
+    }
+
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> res;
+        tringo(res,0,numRows);
+        return res;
+    }
+};

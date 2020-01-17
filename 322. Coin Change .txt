@@ -1,0 +1,25 @@
+https://leetcode.com/problems/coin-change/
+
+class Solution {
+private:
+    unordered_map<int,int> map;
+    int mini = INT_MAX;
+    void coinCh(vector<int>& coins,int amount,int num){
+        if(amount < 0 || mini <= num || (map.count(amount) && map[amount] <= num))
+            return;
+        if(amount == 0){
+            mini = min(mini,num);
+            return;
+        }
+        for(int i =  coins.size() - 1 ; i >= 0; i--){
+            coinCh(coins,amount - coins[i],num+1);
+        }
+        map[amount] = num;
+    }
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        sort(coins.begin(),coins.end());
+        coinCh(coins,amount,0);
+        return mini == INT_MAX ? -1 : mini;
+    }
+};

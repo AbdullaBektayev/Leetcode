@@ -1,0 +1,25 @@
+https://leetcode.com/problems/number-of-islands/
+
+class Solution {
+private:
+    void check(vector<vector<char>>& grid,int row,int coulmn){
+        grid[row][coulmn] = '0';
+        if(row + 1 < grid.size() && grid[row + 1][coulmn] == '1'){check(grid,row+1,coulmn);}
+        if(coulmn + 1 < grid[0].size() && grid[row][coulmn + 1] == '1'){check(grid,row,coulmn+1);}
+        if(row - 1 >= 0 && grid[row - 1][coulmn] == '1'){check(grid,row-1,coulmn);}
+        if(coulmn - 1 >= 0 && grid[row][coulmn - 1] == '1'){check(grid,row,coulmn-1);}
+    }
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int sum = 0;
+        for(int i = 0 ; i < grid.size(); i++ ){
+            for(int j = 0; j < grid[0].size(); j++){
+                if(grid[i][j] == '1'){
+                    check(grid,i,j);
+                    sum++;
+                }
+            }
+        }
+        return sum;
+    }
+};

@@ -1,0 +1,19 @@
+https://leetcode.com/problems/reverse-integer/
+
+class Solution {
+public:
+    int reverse(int n) {
+    int temp;
+    long k=0;
+    while (n != 0) {
+        temp = n % 10;
+        if(k*10 >= INT_MAX || k*10 <= INT_MIN){
+            return 0;
+        }
+        k = k*10 + temp;
+        n /= 10;
+    }
+    
+    return k;
+    }
+};

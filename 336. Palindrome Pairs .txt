@@ -1,0 +1,70 @@
+https://leetcode.com/problems/palindrome-pairs/
+
+class Solution {
+private:
+    struct Trie{
+        Trie* data[26];
+        vector<int> palin;
+        int index = -1;
+    };
+    Trie* head = new Trie();
+    
+    bool isPalindrom(string str,int start, int end){
+        while(start < end)
+            if(str[start++] != str[end--])
+                return false;
+        
+        return true;
+    }
+    
+    void insert(string word,int idx){
+        Trie* cur = head;
+        for(int i = word.size() - 1; i >= 0; i--){
+            int in = word[i] - 'a';
+            if(!cur->data[in])
+                cur->data[in] = new Trie();
+            
+            if(isPalindrom(word,0,i))
+                cur->palin.push_back(idx);
+            
+            cur = cur->data[in];
+        }
+        
+        cur->palin.push_back(idx);
+        cur->index = idx;
+    }
+    
+    void search(vector<vector<int>>& res,string word, int idx){
+        Trie*cur = head;
+        int size = word.size() - 1;
+        for(int i = 0; i <= size; i++){
+            int in = word[i] - 'a';
+            if(cur->index >= 0 && cur->index != idx && isPalindrom(word,i,size))
+                res.push_back({idx,cur->index});
+            
+            if(!cur->data[in])
+                return;
+            
+            cur = cur->data[in];
+        }
+        
+        for(int i : cur->palin)
+            if(i != idx)
+                res.push_back({idx,i});
+        
+    }
+public:
+    vector<vector<int>> palindromePairs(vector<string>& words) {
+        vector<vector<int>> res;
+        
+        for(int i = 0; i < words.size(); i++){
+            insert(words[i],i);
+        }
+        
+        for(int i = 0 ; i < words.size(); i++){
+            search(res,words[i],i);
+        }
+        
+        return res;
+    }
+};

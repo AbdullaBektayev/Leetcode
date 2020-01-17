@@ -1,0 +1,38 @@
+https://leetcode.com/problems/wildcard-matching/
+
+class Solution {
+private:
+
+    bool ch(string& s, string& p,int ss,int pp,vector<vector<int>>& dp){
+        if(dp[ss][pp] != -1){return dp[ss][pp];}
+        if(ss >= s.length() && pp >= p.length()){
+            return true;
+        }
+        
+        if(ss < s.length() && (s[ss] == p[pp] || p[pp] == '?')){
+            dp[ss][pp] = ch(s,p,ss+1,pp+1,dp);  
+        }
+        else if(p[pp] == '*'){
+            if(s.length() > ss){
+                bool firstRes = ch(s,p,ss+1,pp+1,dp);
+                bool secondRes = ch(s,p,ss+1,pp,dp);
+                bool thirdRes = ch(s,p,ss,pp+1,dp);
+
+                dp[ss][pp] = (firstRes || secondRes || thirdRes) ? 1 : 0;
+            }
+            else {
+                dp[ss][pp] = ch(s,p,ss,pp+1,dp);
+            }
+        }
+        else{
+            dp[ss][pp] = 0;
+        }
+        
+        return dp[ss][pp];
+    }
+public:
+    bool isMatch(string s, string p) {
+        vector<vector<int>> dp(s.length()+1,vector<int> (p.length()+1,-1));
+        return ch(s,p,0,0,dp);
+    }
+};

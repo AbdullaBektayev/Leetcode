@@ -1,0 +1,23 @@
+https://leetcode.com/problems/happy-number/
+
+class Solution {
+private:
+unordered_set<int> set;
+
+public:
+    bool isHappy(int n) {
+        if(set.count(n)){
+            return false;
+        }
+        set.insert(n);
+        int sum = 0;
+        int temp;
+        while(n != 0){
+            temp = n%10;
+            sum += temp*temp;
+            n /= 10;
+        }
+        if(sum == 1){return true;}
+        return isHappy(sum);
+    }
+};

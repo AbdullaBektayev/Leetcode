@@ -1,0 +1,95 @@
+https://leetcode.com/problems/unique-binary-search-trees-ii/
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    int center = 0;
+    TreeNode* insert(TreeNode* root, int in){
+        if(!root)
+            return new TreeNode(in);
+        else if(root->val < in){
+            root->right = insert(root->right,in);
+        }
+        else{
+            root->left = insert(root->left,in);
+        }
+        return root;
+    }
+    
+    TreeNode* deleteNode(TreeNode* root, int in){
+        if(root->val == in){
+            return nullptr;
+        }
+        if(root->val < in){
+            root->right = deleteNode(root->right,in);
+        }
+        else{
+            root->left = deleteNode(root->left,in);
+        }
+        return root;
+    }
+    
+    TreeNode* copy(TreeNode* main){
+        TreeNode* temp = new TreeNode(main->val);
+        if(main->left)
+            temp->left = copy(main->left);
+        if(main->right)
+            temp->right = copy(main->right);
+        return temp;
+    }
+    
+    bool same(TreeNode* first, TreeNode* second){
+        if(!first && !second){return true;}
+        if(!first || !second || first->val != second->val){return false;}
+        return same(first->left,second->left) && same(first->right,second->right);
+    }
+    void generate(TreeNode* main, int i, vector<int> res, vector<TreeNode*>& answer){
+        if(!main){
+            main = new TreeNode(res[i]);
+            generate(main,i+1,res,answer);
+            return;
+        }
+        if(i >= res.size()){
+            for(int j = 0; j < answer.size(); j++){
+                if(same(answer[j],main)){return;}
+            }
+            answer.push_back(copy(main));
+            return;
+        }
+        bool check = false;
+        for(int j = i ; j < res.size(); j++){
+            swap(res[i],res[j]);
+            insert(main,res[i]);
+            generate(main,i+1,res,answer);
+            deleteNode(main,res[i]);
+        }
+    }
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        
+        vector<TreeNode*> answer;
+        if(n == 0){return answer;}
+        vector<int> res(n);
+        for(int i = 0; i < n; i++){
+            res[i] = i + 1;
+        }
+        
+        
+        
+        for(int i = 0; i < n ; i++){
+            swap(res[0],res[i]);
+            generate(nullptr,0,res,answer);
+        }
+        
+        return answer;
+    }
+};

@@ -1,0 +1,26 @@
+https://leetcode.com/problems/binary-tree-postorder-traversal/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    void DFS(TreeNode* root, vector<int>& vec){
+        if(root->left){DFS(root->left,vec);}
+        if(root->right){DFS(root->right,vec);}
+        vec.push_back(root->val);
+    }
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> vec;
+        if(!root){return vec;}
+        DFS(root, vec);
+        return vec;
+    }
+};

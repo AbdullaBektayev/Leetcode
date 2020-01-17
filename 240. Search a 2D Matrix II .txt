@@ -1,0 +1,25 @@
+https://leetcode.com/problems/search-a-2d-matrix-ii/
+
+class Solution {
+    bool search(vector<vector<int>> & matrix, int rowS,int rowE, int colS, int colE,int target){
+        if(rowS > rowE || colS > colE){return false;}
+        int midR = (rowS + rowE)/2;
+        int midC = (colS + colE)/2;
+        if(matrix[midR][midC] == target){return true;}
+        else if(matrix[midR][midC] > target){
+            return search(matrix,rowS,midR - 1,colS,midC - 1,target) ||
+                search(matrix,rowS,midR - 1,midC, colE, target) ||
+                search(matrix,midR,rowE, colS,midC - 1,target);
+        }
+        else{
+            return search(matrix,rowS, midR,midC + 1,colE,target) ||
+                    search(matrix,midR + 1,rowE,colS,midC,target) ||
+                    search(matrix,midR + 1,rowE,midC + 1,colE,target);
+        }
+    }
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if(matrix.size() == 0){return false;}
+        return search(matrix,0,matrix.size() - 1,0,matrix[0].size() - 1,target);
+    }
+};

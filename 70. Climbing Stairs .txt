@@ -1,0 +1,13 @@
+https://leetcode.com/problems/climbing-stairs/
+
+class Solution {
+private:
+    unordered_map<int,int> map;
+public:
+    int climbStairs(int n) {
+        if(n < 2){map[n] = 1;}
+        else if(map.count(n)){return map[n];}
+        else{map[n] = climbStairs(n-1) + climbStairs(n-2);}
+        return map[n];
+    }
+};

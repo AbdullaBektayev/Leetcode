@@ -1,0 +1,21 @@
+https://leetcode.com/problems/permutations/
+
+class Solution {
+private:
+    vector<vector<int>> res; 
+    void permute(vector<int> nums,int num){
+        if(num == nums.size()){
+            res.push_back(nums);
+            return;
+        }
+        for(int i = num ;i < nums.size(); i++){
+            swap(nums[num],nums[i]);
+            permute(nums,num+1);
+        }
+    }
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        permute(nums,0);
+        return res;
+    }
+};

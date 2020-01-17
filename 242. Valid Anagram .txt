@@ -1,0 +1,26 @@
+https://leetcode.com/problems/valid-anagram
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        
+    int let[26] = {0};
+        bool b = true;
+    
+        if(s.length() != t.length()){
+            return false;
+        }
+    for(int i = 0; i < t.length(); i++){
+        let[(int)t[i] - 97]++;
+        let[(int)s[i] - 97]--;
+    }
+    
+    for(int i = 0; i < 26; i++){
+        if(let[i] != 0){
+            b = false;
+            break;
+        }
+    }
+    return b;
+    }
+};

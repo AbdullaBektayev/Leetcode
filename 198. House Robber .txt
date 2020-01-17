@@ -1,0 +1,17 @@
+https://leetcode.com/problems/house-robber/
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int prev = 0;
+        int cur = 0;
+        int tmp;
+        for (int i = 0; i < nums.size(); i ++)
+        {
+            tmp = prev;
+            prev = cur;
+            cur = max(tmp + nums[i], cur);
+        }
+        return cur;
+    }
+};

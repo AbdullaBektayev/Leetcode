@@ -1,0 +1,31 @@
+https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder, int& rowP,int left,int right ){
+        if(left > right){return nullptr;}
+        int pivot = left;
+        while(inorder[pivot] != preorder[rowP]){
+            pivot++;
+        }
+        rowP++;
+        TreeNode* node = new TreeNode(inorder[pivot]);
+        node->left = buildTree(preorder,inorder,rowP,left,pivot-1);
+        node->right = buildTree(preorder,inorder,rowP,pivot+1,right);
+        return node;
+    }
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int rowP = 0;
+        return buildTree(preorder,inorder,rowP,0,preorder.size() - 1);
+    }
+};

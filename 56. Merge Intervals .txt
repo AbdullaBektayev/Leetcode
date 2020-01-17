@@ -1,0 +1,21 @@
+https://leetcode.com/problems/merge-intervals/
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        if(intervals.size() <= 1)
+            return intervals;
+        
+        sort(intervals.begin(),intervals.end());
+        vector<vector<int>> res;
+        res.push_back(intervals[0]);
+        for(vector<int> temp : intervals){
+            if(temp[0] <= res.back()[1])
+                res.back()[1] = max(temp[1],res.back()[1]);
+            else
+                res.push_back(temp);
+        }
+        
+        return res;
+    }
+};

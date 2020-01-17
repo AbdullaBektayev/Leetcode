@@ -1,0 +1,26 @@
+https://leetcode.com/problems/power-of-four/
+
+class Solution {
+public:
+    bool isPowerOfFour(int a) {
+        if(a == 4 || a == 1 || a== 16){
+        return true;
+        }
+    if(a <= 0){
+        return false;
+    }
+    if(a/10 == 0){
+        return false;
+    }
+    else{
+        string s = to_string(a);
+        if(a%4 == 0 && a%8 == 0 && (s[s.size() - 1] == '4' || s[s.size() - 1] == '6') && (s[0] == '4' || s[0] == '6' || s[0] == '2' || s[0] == '1')){
+            if((a/8)%4 == 0 && ((a/8)/4)%2 == 0){
+                return true;
+            }
+            return false;
+        }
+    }
+    return false;
+    }
+};

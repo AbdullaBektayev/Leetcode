@@ -1,0 +1,49 @@
+https://leetcode.com/problems/course-schedule-ii/submissions/
+
+
+class Solution {
+private:
+    bool ch = true;
+    void check(vector<stack<int>>& vec,queue<int>& st,unordered_set<int>& set,unordered_set<int>& visited,int idx){
+        if(visited.count(idx)){
+            ch = false;
+            return;
+        }
+        visited.insert(idx);
+        
+        while(!vec[idx].empty()){
+            check(vec,st,set,visited,vec[idx].top());
+            vec[idx].pop();
+        }
+        visited.erase(idx);
+        if(!set.count(idx)){
+            set.insert(idx);
+            st.push(idx);
+        }
+    }
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<stack<int>> begin(numCourses);
+        queue<int> st;
+        unordered_set<int> set,visited;
+        vector<int> res;
+        
+        for(vector<int> pair : prerequisites){
+            begin[pair[0]].push(pair[1]);
+        }
+        
+        for(int i = 0; i < numCourses; i++){
+            if(!set.count(i))
+                check(begin,st,set,visited,i);
+        }
+        cout << ch;
+        if(!ch){
+            return res;
+        }
+        while(!st.empty()){
+            res.push_back(st.front());
+            st.pop();
+        }
+        return res;
+    }
+};

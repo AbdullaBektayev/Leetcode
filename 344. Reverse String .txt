@@ -1,0 +1,16 @@
+https://leetcode.com/problems/reverse-string/
+
+
+class Solution {
+    void reverseString(vector<char>& s, int start, int end){
+        if(end <= start){
+            return;
+        }
+        swap(s[start],s[end]);
+        reverseString(s,start+1,end-1);
+    }
+public:
+    void reverseString(vector<char>& s) {
+        reverseString(s,0,s.size()-1);
+    }
+};

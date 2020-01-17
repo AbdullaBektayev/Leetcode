@@ -1,0 +1,31 @@
+https://leetcode.com/problems/clone-graph/
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> neighbors;
+
+    Node() {}
+
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+*/
+class Solution {
+private:
+unordered_map<Node* ,Node*> map;
+public:
+    Node* cloneGraph(Node* node) {
+        if(map.count(node)){return map[node];}
+        Node* temp = new Node(node->val,{});
+        map[node] = temp;
+        for(int i = 0; i < node->neighbors.size(); i++){
+            temp->neighbors.push_back(cloneGraph(node->neighbors[i]));
+        }
+        return temp;
+    }
+};

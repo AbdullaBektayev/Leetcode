@@ -1,0 +1,33 @@
+https://leetcode.com/problems/remove-invalid-parentheses/
+
+class Solution {
+private:
+    vector<string> res;
+    void removeInvalid(string s,pair<char,char> p,int last_i, int last_j){
+        int st = 0;
+        for(int i = last_i ;i < s.length(); i++){
+            if(s[i] == p.first){st++;}
+            else if(s[i] == p.second){ st--;}
+            if(st >= 0){continue;}
+            for(int j = last_j; j <= i; j++){
+                if(s[j] == p.second && (j == last_j || p.second != s[j-1])){
+                    removeInvalid(s.substr(0,j) + s.substr(j+1,s.length()),p,i,j);
+                }
+            }
+            return;
+        }
+        reverse(s.begin(),s.end());
+        if(p.first == '('){
+            p.first = ')'; p.second = '(';
+            removeInvalid(s,p,0,0);
+        }
+        else{
+            res.push_back(s); 
+        }
+    }
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        removeInvalid(s,{'(',')'},0,0);
+        return res;
+    }
+};

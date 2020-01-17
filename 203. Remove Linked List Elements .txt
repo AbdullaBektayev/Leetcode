@@ -1,0 +1,32 @@
+https://leetcode.com/problems/remove-linked-list-elements/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if(head==NULL){
+            return head;
+        }
+        while(head && head->val == val){
+            head = head->next;
+        }
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(fast){
+            while(fast && fast->val == val){
+                fast = fast->next;
+                slow->next = fast;
+            }
+            slow = fast;
+            if(fast){fast = fast->next;}
+        }
+        return head;
+    }
+};

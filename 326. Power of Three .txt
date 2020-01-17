@@ -1,0 +1,19 @@
+https://leetcode.com/problems/power-of-three/
+
+class Solution {
+public:
+    bool isPowerOfThree(int a) {
+    if(a == 0){
+        return false;
+    }
+    if(a == 1){
+        return true;
+    }
+    else if (a%3 == 0){
+        return isPowerOfThree(a/3);
+    }
+    else{
+        return false;
+    }
+    }
+};
