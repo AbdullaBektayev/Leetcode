@@ -1,0 +1,35 @@
+https://leetcode.com/problems/fruit-into-baskets/
+
+
+class Solution {
+public:
+    int totalFruit(vector<int>& tree) {
+        if(tree.size() == 0)
+            return 0;
+        int first = -1;
+        int sec = -1;
+        int last = 0;
+        int sum = 0;
+        int res = 0;
+        for(int i = 0; i < tree.size(); i++){
+            if(first == tree[i] || tree[i] == sec){
+                sum++;
+            }
+            else{
+                sum = last + 1;
+            }
+            
+            if(first == tree[i])
+                last++;
+            else
+                last = 1;
+            
+            if(first != tree[i]){
+                sec = first;
+                first = tree[i];
+            }
+            res = max(sum,res);
+        }
+        return res;
+    }
+};

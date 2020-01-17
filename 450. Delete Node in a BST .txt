@@ -1,0 +1,48 @@
+https://leetcode.com/problems/delete-node-in-a-bst/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(!root){
+            return nullptr;
+        }
+        if(root->val < key){
+            root->right = deleteNode(root->right,key);
+        }
+        else if(root->val > key){
+            root->left = deleteNode(root->left,key);
+        }
+        else{
+            if(!root->left){
+                return root->right;
+            }
+            if(!root->right){
+                return root->left;
+            }
+            TreeNode* right = root->right;
+            TreeNode* temp = right;
+            while(right->left){
+                temp = right;
+                right = right->left;
+            }
+            if(root->right == right){
+                root->val = right->val;
+                root->right = right->right;
+            }
+            else{
+                root->val = right->val;
+                temp->left = right->right;
+            }
+        }
+        return root;
+    }
+};

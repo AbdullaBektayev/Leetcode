@@ -1,0 +1,48 @@
+https://leetcode.com/problems/open-the-lock/
+
+class Solution {
+private:
+    void insertQ(unordered_set<string>& set, queue<string>& q, string s){
+        string temp = s;
+        for(int i = 0; i < 4; i++){
+            if(s[i] == '0'){s[i] = '9';}
+            else{s[i] = s[i] - 1;}
+            if(!set.count(s)){q.push(s);}
+            s = temp;
+            if(s[i] == '9'){s[i] = '0';}
+            else{s[i] = s[i] + 1;}
+            if(!set.count(s)){q.push(s);}
+            s = temp;
+        }
+    }
+public:
+    int openLock(vector<string>& deadends, string target) {
+        unordered_set<string> set;
+        for(int i = 0; i < deadends.size(); i++ ){
+            set.insert(deadends[i]);
+        }
+        queue<string> q;
+        //insertQ(set,t,target);
+        //if(t.empty() || set.count("0000")){return -1;}
+        q.push("0000");
+        int size;
+        string s;
+        int min = 0;
+        while(!q.empty()){
+            size = q.size();
+            for(int i = 0; i < size; i++){
+                s = q.front();
+                q.pop();
+                if(s == target){
+                    return min;
+                }
+                if(!set.count(s)){
+                    set.insert(s);
+                    insertQ(set,q,s);
+                }
+            }
+            min++;
+        }
+        return -1;
+    }
+};

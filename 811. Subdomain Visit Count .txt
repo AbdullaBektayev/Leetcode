@@ -1,0 +1,60 @@
+https://leetcode.com/problems/subdomain-visit-count/
+
+
+
+class Solution {
+public:
+    vector<string> subdomainVisits(vector<string>& a) {
+        bool b = true;
+    vector<string> sub;
+    vector<int> num;
+    int w = 0;
+    for(int i =0; i < a.size(); i++){
+        int k  = a[i].size() - 1;
+        b = true;
+        while (b) {
+            if(a[i][k] != ' '){
+                if(a[i][k] == '.'){
+                    sub.push_back(a[i].substr(k+1,a[i].size() - 1));
+                }
+            }
+            else{
+                sub.push_back(a[i].substr(k+1,a[i].size() - 1));
+                w = atoi( a[i].substr(0,k).c_str() );
+                num.push_back(w);
+                b = false;
+            }
+            k--;
+        }
+    }
+    
+    for(int i =0 ; i < sub.size() ;i++ ){
+        for(int j = i + 1; j < sub.size(); j++){
+            if(sub[i] == sub [j]){
+                sub.erase(sub.begin() + j);
+                j--;
+            }
+        }
+    }
+    vector<int> sum ;
+    for(int i =0 ; i < sub.size(); i++ ){
+        sum.push_back(0);
+    }
+    
+    for(int i = 0; i < a.size(); i++){
+        for(int j =0 ;j < sub.size() ; j++){
+            if(a[i].size() >= sub[j].size()){
+                if(a[i].substr(a[i].size() - sub[j].size(), a[i].size() - 1) == sub[j]){
+                    sum[j] += num[i];
+                }
+            }
+        }
+    }
+
+    
+    for(int i =0 ; i < sub.size(); i++){
+        sub[i] = to_string(sum[i]) + " " + sub[i];
+    }
+        return sub;
+    }
+};

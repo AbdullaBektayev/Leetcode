@@ -1,0 +1,34 @@
+https://leetcode.com/problems/decode-string/
+
+
+
+
+class Solution {
+private:
+    string fill(int &i, string &s){
+        string res = "";
+        while(i < s.length() && s[i] != ']'){
+            if(!isdigit(s[i])){
+                res += s[i++];
+            }
+            else{
+                int num = 0;
+                while(i < s.length() && isdigit(s[i])){
+                    num = num*10 + s[i++] - '0';
+                }
+                i++;//[
+                string t = fill(i,s);
+                i++;//]
+                while(num-- > 0){
+                    res += t;
+                }
+            }
+        }
+        return res;
+    }
+public:
+    string decodeString(string s) {
+        int i = 0;
+        return fill(i,s);
+    }
+};

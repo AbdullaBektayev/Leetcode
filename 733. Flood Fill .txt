@@ -1,0 +1,35 @@
+https://leetcode.com/problems/flood-fill/
+
+class Solution {
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        int oldColor = image[sr][sc];
+        if(oldColor == newColor){return image;}
+        queue<pair<int,int>> q;
+        q.push({sr,sc});
+        int row,coulmn;
+        int size;
+        while(!q.empty()){
+            size = q.size();
+            for(int i = 0; i < q.size(); i++){
+                row = q.front().first;
+                coulmn = q.front().second;
+                q.pop();
+                image[row][coulmn] = newColor;
+                if(row + 1 < image.size() && image[row + 1][coulmn] == oldColor){
+                    q.push({row+1,coulmn});
+                }
+                if(row - 1 > -1 && image[row - 1][coulmn] == oldColor){
+                    q.push({row-1,coulmn});
+                }
+                if(coulmn + 1 < image[0].size() && image[row][coulmn + 1] == oldColor){
+                    q.push({row,coulmn+1});
+                }
+                if(coulmn - 1 > - 1 && image[row][coulmn - 1] == oldColor){
+                    q.push({row,coulmn - 1});
+                }
+            }
+        }
+        return image;
+    }
+};

@@ -1,0 +1,30 @@
+https://leetcode.com/problems/check-completeness-of-a-binary-tree/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isCompleteTree(TreeNode* root) {
+        if(!root)
+            return true;
+        vector<TreeNode*> vec;
+        vec.push_back(root);
+        int i = 0;
+        while(vec[i] != nullptr){
+            vec.push_back(vec[i]->left);
+            vec.push_back(vec[i]->right);
+            i++;
+        }
+        while(i < vec.size() && vec[i] == nullptr){
+            i++;
+        }
+        return i == vec.size();
+    }
+};

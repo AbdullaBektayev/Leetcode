@@ -1,0 +1,21 @@
+https://leetcode.com/problems/rectangle-overlap/
+
+
+class Solution {
+public:
+    bool ch = true;
+    bool isRectangleOverlap(vector<int>& rec1, vector<int>& rec2) {
+        bool f = false,s = false;
+        if(rec1[0] < rec2[2] && rec1[2] > rec2[0]){
+            f = true;
+        }
+        if(rec1[1] < rec2[3] && rec1[3] > rec2[1]){
+            s = true;
+        }
+        if(ch){
+            ch = false;
+            return (s && f) || isRectangleOverlap(rec2,rec1);
+        }
+        return (s && f);
+    }
+};

@@ -1,0 +1,150 @@
+https://leetcode.com/problems/design-linked-list/
+
+
+class MyLinkedList {
+public:
+    /** Initialize your data structure here. */
+    struct Node{
+        int val;
+        Node* prev;
+        Node* next;
+    };
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    int size = 0;
+    MyLinkedList() {
+        
+    }
+    
+    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+    int get(int index) {
+        if(index >= size){return -1;}
+        Node* root = head;
+        Node* temp = tail;
+        int last = size - 1;
+        int first = 0;
+        // cout <<size<<endl;
+        // while(temp){
+        //     cout << temp->val <<"  ";
+        //     temp=temp->prev;
+        // }
+        while(true){
+            if(last == index){
+                return temp->val;
+            }
+            if(first == index){
+                return root->val;
+            }
+            root = root->next;
+            temp = temp->prev;
+            last--;
+            first++;
+        }
+        return -1;
+    }
+    
+    /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+    void addAtHead(int val) {
+        Node* root = new Node();
+        root->val = val;
+        size++;
+        if(!head){head = root;tail = root;return;}
+        root->next = head;
+        head->prev = root;
+        head = root;
+    }
+    
+    /** Append a node of value val to the last element of the linked list. */
+    void addAtTail(int val) {
+        Node* root = new Node();
+        root->val = val;
+        size++;
+        if(!tail){head = root;tail = root;return;}
+        root->prev = tail;
+        tail->next = root;
+        tail = root;
+        //cout << "aa";
+    }
+    
+    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+    void addAtIndex(int index, int val) {
+        if(index > size){return;}
+        else if(index == 0){addAtHead(val);return;}
+        else if(index == size){addAtTail(val);return;}
+        Node* root = head;
+        Node* tailRoot = tail;
+        Node* ins = new Node;
+        ins->val = val;
+        int last = size - 1;
+        int first = 0;
+        Node* temp1;
+        size++;
+        while(true){
+            if(last == index - 1){
+                temp1 = tailRoot->next;
+                tailRoot->next = ins;
+                ins->prev = tailRoot;
+                ins->next = temp1;
+                if(temp1){
+                    temp1->prev = ins;
+                }
+                return;
+            }
+            if(first == index - 1){
+                temp1 = root->next;
+                root->next = ins;
+                ins->prev = root;
+                if(temp1){
+                    temp1->prev = ins;
+                }
+                ins->next = temp1;
+                return;
+            }
+            root = root->next;
+            tailRoot = tailRoot->prev;
+            last--;
+            first++;
+        }
+    }
+    
+    /** Delete the index-th node in the linked list, if the index is valid. */
+    void deleteAtIndex(int index) {
+        if(index >= size){return;}
+        else if(index == 0){head = head->next;size--;return;}
+        else if(index == size - 1){tail = tail->prev;size--;return;}
+        Node* root = head;
+        Node* temp = tail;
+        int last = size - 1;
+        int first = 0;
+        size--;
+        Node* temp1;
+        while(true){
+            if(last == index - 1){
+                temp1 = temp->next->next;
+                temp->next = temp1;
+                temp1->prev = temp;
+                return;
+            }
+            if(first == index - 1){
+                temp1 = root->next->next;
+                root->next = temp1;
+                temp1->prev = root;
+                return;
+            }
+            root = root->next;
+            temp = temp->prev;
+            last--;
+            first++;
+        }
+    }
+};
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * MyLinkedList* obj = new MyLinkedList();
+ * int param_1 = obj->get(index);
+ * obj->addAtHead(val);
+ * obj->addAtTail(val);
+ * obj->addAtIndex(index,val);
+ * obj->deleteAtIndex(index);
+ */

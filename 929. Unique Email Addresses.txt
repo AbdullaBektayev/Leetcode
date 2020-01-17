@@ -1,0 +1,49 @@
+https://leetcode.com/problems/unique-email-addresses/
+
+
+
+class Solution {
+public:
+    int numUniqueEmails(vector<string>& v) {
+string str;
+    
+    for(int i = 0; i < v.size(); i++){
+        int w = 0;
+        int m = 0;
+        int a = 0;
+        for(int j = 0; j < v[i].length() ;j++){
+            if(v[i][j] == '@'){
+                m = j;
+                if(w != 0){
+                    v[i].erase(w,m - w);
+                }
+                break;
+            }
+            if(v[i][j] == '.'){
+                v[i].erase(j,1);
+            }
+            if(v[i][j] == '+' && a == 0){
+                a++;
+                w = j;
+            }
+        }
+    }
+    
+    for(int i = 0; i < v.size(); i++){
+        for(int j = i + 1; j < v.size(); j++){
+            if(v[i] == v[j] && v[i] != ""){
+                v[j] = "";
+                j--;
+            }
+        }
+    }
+    
+    int num = 0;
+    for(int i = 0; i < v.size(); i++){
+        if(v[i] != ""){
+            num++;
+        }
+    }
+    return num;
+    }
+};

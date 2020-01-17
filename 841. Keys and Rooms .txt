@@ -1,0 +1,20 @@
+https://leetcode.com/problems/keys-and-rooms/
+
+
+
+class Solution {
+private:
+    void DFS(unordered_set<int>& set,vector<vector<int>>& rooms,int i){
+        if(set.count(i)){return;}
+        set.insert(i);
+        for(int j = 0; j < rooms[i].size(); j++){
+            DFS(set,rooms,rooms[i][j]);
+        }
+    } 
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        unordered_set<int> set;
+        DFS(set,rooms,0);
+        return set.size() == rooms.size();
+    }
+};

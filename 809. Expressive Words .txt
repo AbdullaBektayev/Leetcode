@@ -1,0 +1,26 @@
+https://leetcode.com/problems/expressive-words/
+
+class Solution {
+private:
+    bool expressive(string str, string word){
+        if(word.length() > str.length())
+            return false;
+        int j = 0;
+        for(int i = 0 ; i < str.length(); i++){
+            if(j < word.length() && word[j] == str[i]){j++;continue;}
+            else if(i >= 2 && str[i] == str[i-1] && str[i-1] == str[i-2]){continue;}
+            else if(i > 0 && i < str.length() - 1 && str[i] == str[i-1] && str[i] == str[i+1]){continue;}
+            return false;
+        }
+        return j == word.length();
+    }
+public:
+    int expressiveWords(string S, vector<string>& words) {
+        int sum = 0;
+        for(string word : words){
+            if(expressive(S,word))
+                sum++;
+        }
+        return sum;
+    }
+};

@@ -1,0 +1,28 @@
+https://leetcode.com/problems/find-pivot-index/
+
+
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        if(nums.size() == 0){
+            return -1;
+        }
+        int sum = 0;
+        for(int i = 1; i < nums.size(); i++){
+            sum += nums[i];
+        }
+        
+        int prev = 0;
+        if(prev == sum){
+            return 0;
+        }
+        for(int i = 1; i < nums.size(); i++){
+            prev += nums[i-1];
+            sum -= nums[i];
+            if(prev == sum){
+                return i;
+            }
+        }
+        return -1;
+    }
+};

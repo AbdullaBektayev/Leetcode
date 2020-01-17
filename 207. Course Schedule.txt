@@ -1,0 +1,43 @@
+https://leetcode.com/problems/course-schedule/
+
+
+class Solution {
+private:
+    bool ch = true;
+    void check(vector<stack<int>>& vec,int idx, unordered_set<int>& set,unordered_set<int>& visited){
+        if(visited.count(idx)){
+            ch = false;
+            return;
+        }
+        visited.insert(idx);
+        while(!vec[idx].empty()){
+            if(!set.count(vec[idx].top()))
+                check(vec,vec[idx].top(),set,visited);
+            vec[idx].pop();
+        }
+        visited.erase(idx);
+        set.insert(idx);
+    }
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        stack<int> st;
+        vector<stack<int>> vec(numCourses);
+        unordered_set<int> set;
+        unordered_set<int> visited;
+        
+        for(vector<int> pair : prerequisites){
+            vec[pair[0]].push(pair[1]);
+        }
+        
+        for(int i = 0; i < numCourses; i++){
+            if(!set.count(i)){
+                check(vec,i,set,visited);
+            }
+        }
+        
+        if(ch){
+            return true;
+        }
+        return false;
+    }
+};

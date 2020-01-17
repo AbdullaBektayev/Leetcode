@@ -1,0 +1,27 @@
+https://leetcode.com/problems/student-attendance-record-i/
+
+class Solution {
+public:
+    bool checkRecord(string s) {
+    int a[3] = {0};
+        for(int i =0; i< s.length() ; i++){
+        if( s[i] == 'A'){
+            a[0]++;
+            if(a[0] > 1){
+                return false;
+            }
+        }
+        if( i != s.length()-1 && s[i] == 'L' && s[i] == s[i+1]){
+            a[1] += 2;
+            if(a[1] > 2){
+                return false;
+            }
+        }
+        else{
+            a[1] = 0;
+        }
+    }
+    
+    return true;
+    }
+};

@@ -1,0 +1,68 @@
+https://leetcode.com/problems/4sum/
+
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> total;
+        int len = nums.size();
+        if(len < 4)
+            return total;
+        sort(nums.begin(), nums.end());
+        int min = nums[0];
+        int max = nums[len-1];
+        
+        if(max*4 < target || min*4 > target)
+            return total;
+        int temp;
+        bool ch = 0;
+        for(int i = 0; i < len; i++ ){
+            int z = nums[i];
+            if(z + max*3 < target)
+                continue;
+            if(z*4 > target)
+                break;
+            int secTar = target - z;
+            for(int j = i + 1; j < len; j++){
+                int y = nums[j];
+                if(y + max*2 < secTar)
+                    continue;
+                if(y*3 > secTar)
+                    break;
+                int thrTar = secTar - y; 
+                int left = j + 1;
+                int right = len-1;
+                while(right > left){
+                    if(nums[right] + nums[left] < thrTar)
+                        left++;
+                    else if(nums[right] + nums[left] > thrTar)
+                        right--;
+                    else{
+                        total.push_back(vector<int>{nums[i],nums[j],nums[left],nums[right]});
+                        temp = nums[left];
+                        while(left < len && temp == nums[left])
+                            left++;
+                    }    
+                }
+                temp = nums[j];
+                while(j < len && temp == nums[j]){
+                    j++;
+                    ch = true;
+                }
+                if(ch)
+                    j--;
+                ch = false;
+            }
+            
+            temp = nums[i];
+            while(i < len && temp == nums[i]){
+                i++;
+                    ch = true;
+                }
+            if(ch)
+                i--;
+            ch = false;
+        }
+        return total;
+    }
+};

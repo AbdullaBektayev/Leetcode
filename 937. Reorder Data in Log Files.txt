@@ -1,0 +1,67 @@
+https://leetcode.com/problems/reorder-data-in-log-files/
+
+
+
+class Solution {
+public:
+    vector<string> reorderLogFiles(vector<string>& s) {vector<string> a;
+    vector<string> a1;
+    vector<string> c;
+    string w;
+    string y;
+    int num = 0;
+    for(int i =0; i < s.size(); i++){
+        for(int j = 0; j < s[i].size(); j++){
+            if(s[i][j]==' ' && (s[i][j+1] >='a' && s[i][j+1] <= 'z' )){
+                w = s[i].substr(j + 1,s[i].size() - 1);
+                y = s[i].substr(0, j);
+                a.push_back(w);
+                a1.push_back(y);
+                num++;
+                break;
+            }
+            if(s[i][j]==' ' && ((int)s[i][j+1] >=48 && (int)s[i][j+1] <= 57 )){
+                w = s[i];
+                s.erase(s.begin() + i);
+                c.push_back(w);
+                i--;
+                break;
+            }
+        }
+    }
+    
+
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a.size(); j++){
+            if(a[i]<a[j]){
+                string str = a[i];
+                a[i] = a[j];
+                a[j] = str;
+                string str1 = a1[i];
+                a1[i] = a1[j];
+                a1[j] = str1;
+            }
+            if(a[i] == a[j]){
+                if(a1[i] < a1[j]){
+                    string str = a[i];
+                    a[i] = a[j];
+                    a[j] = str;
+                    string str1 = a1[i];
+                    a1[i] = a1[j];
+                    a1[j] = str1;
+                }
+            }
+        }
+    }
+    
+    
+    for(int i =0; i<s.size(); i++){
+        s[i] = a1[i] + " " + a[i];
+    }
+    for(int i = 0; i < c.size(); i++){
+        s.push_back(c[i]);
+    }
+    
+    return s;
+    }
+};

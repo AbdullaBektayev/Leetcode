@@ -1,0 +1,37 @@
+https://leetcode.com/problems/reverse-vowels-of-a-string/
+
+
+
+class Solution {
+public:
+    string reverseVowels(string s1) {
+        int i =0 ;
+    int j = s1.length() -1;
+    bool ib = false;
+    bool jb = false;
+    while(i < j){
+       if(s1[i] == 'a' || s1[i] == 'e' || s1[i] == 'i' || s1[i] == 'o' || s1[i] == 'u' || s1[i] == 'A' || s1[i] == 'E' || s1[i] == 'I' || s1[i] == 'O' || s1[i] == 'U' ){
+            ib = true;
+        }
+        else{
+            i++;
+        }
+        if(s1[j] == 'a' || s1[j] == 'e' || s1[j] == 'i' || s1[j] == 'o' || s1[j] == 'u' || s1[j] == 'A' || s1[j] == 'E' || s1[j] == 'I' || s1[j] == 'O' || s1[j] == 'U' ){
+            jb = true;
+        }
+        else{
+            j--;
+        }
+        if(ib == true && jb == true){
+            char temp = s1[i];
+            s1[i] = s1[j];
+            s1[j] = temp;
+            ib = false;
+            jb = false;
+            i++;
+            j--;
+        }
+    }
+    return s1;
+    }
+};

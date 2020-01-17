@@ -1,0 +1,26 @@
+https://leetcode.com/problems/largest-perimeter-triangle/
+
+class Solution {
+public:
+    int largestPerimeter(vector<int>& a) {
+    sort(a.begin(),a.end());
+    int b;
+    for(int i = a.size() - 3 ; i < a.size(); i++){
+            if(a[i+2] >= a[i] + a[i+1] || a[i] <= a[i+2] - a[i + 1]){
+                a.erase(a.begin()+(i+2));
+                if(a.size()>=3){
+                    i = a.size() - 4;
+                    continue;
+                }
+                else{
+                    return 0;
+                }
+            }
+            else{
+                b = a[i] + a[i+2] + a[i+1];
+                break;
+            }
+    }
+    return b;
+    }
+};

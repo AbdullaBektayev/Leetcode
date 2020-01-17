@@ -1,0 +1,23 @@
+https://leetcode.com/problems/pascals-triangle-ii/
+
+
+
+class Solution {
+private:
+    vector<int> getRow(vector<vector<int>>& res, int row, int& rowIndex){
+        vector<int> temp(row + 1);
+        temp[0] = 1;
+        temp[row] = 1;
+        for(int i = 1; i < row; i++){
+            temp[i] = res[row-1][i] + res[row-1][i-1];
+        }
+        if(row == rowIndex){return temp;}
+        res.push_back(temp);
+        return getRow(res,row+1,rowIndex);
+    }
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<vector<int>> res;
+        return getRow(res,0,rowIndex);
+    }
+};

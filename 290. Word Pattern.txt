@@ -1,0 +1,61 @@
+
+https://leetcode.com/problems/word-pattern/submissions/
+
+
+class Solution {
+public:
+    bool wordPattern(string l1, string s) {
+           string l = l1;
+    string ch = "";
+    vector<string> v;
+    int start;
+    for(int i = 0 ; i < s.length(); i++){
+        start = i;
+        while(s[i] != ' ' && i != s.length()){
+            i++;
+        }
+        v.push_back(s.substr(start,i-start));
+    }
+    for(int i = 0; i < l.length(); i++){
+        for(int j = i + 1; j < l.length(); j++){
+            if(l[i] == l[j]){
+                l.erase(l.begin() + j);
+                j--;
+            }
+        }
+    }
+    for(int i = 0; i < v.size(); i++){
+        for(int j = i + 1; j < v.size(); j++){
+            if(v[i] == v[j]){
+                v.erase(v.begin()+j);
+                j--;
+            }
+        }
+    }
+    
+    if(v.size() != l.length()){
+        return false;
+    }
+    for(int i = 0 ; i < s.length(); i++){
+        start = i;
+        while(s[i] != ' ' && i != s.length()){
+            i++;
+        }
+        for(int j = 0; j < v.size(); j++ ){
+            if(s.substr(start,i - start) == v[j] && i != s.length() - 1){
+                ch+=l[j];
+            }
+            if (i == s.length() - 1 && s.substr(start,i - start) == v[j]){
+                ch+=l[j];
+            }
+        }
+    }
+    
+    if(ch == l1){
+        return true;
+    }
+    else{
+        return false;
+    }
+    }
+};

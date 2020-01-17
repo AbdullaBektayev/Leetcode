@@ -1,0 +1,32 @@
+https://leetcode.com/problems/di-string-match/
+
+
+class Solution {
+public:
+    vector<int> diStringMatch(string s) {
+        int in = 0;
+        vector<int> v;
+    int dec = s.length();
+    if(s[0] == 'D'){
+        
+    }
+    for(int i = 0; i < s.length(); i++){
+        if(s[i] == 'D'){
+            v.push_back(dec);
+            dec--;
+        }
+        else{
+            v.push_back(in);
+            in++;
+        }
+    }
+    
+    if(s[s.length() - 1] == 'D'){
+        v.push_back(dec);
+    }
+    if(s[s.length() - 1] == 'I'){
+        v.push_back(in);
+    }
+    return v;
+    }
+};

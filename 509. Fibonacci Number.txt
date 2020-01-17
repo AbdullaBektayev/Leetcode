@@ -1,0 +1,20 @@
+https://leetcode.com/problems/fibonacci-number/
+
+
+
+class Solution {
+private:
+    unordered_map<int,int> map;
+    int fibo(int N){
+        if(map.count(N)){return map[N];}
+        int res = fib(N-1) + fib(N-2);
+        map[N] = res;
+        return res;
+    }
+public:
+    int fib(int N) {
+        map[0] = 0;
+        map[1] = 1;
+        return fibo(N);
+    }
+};

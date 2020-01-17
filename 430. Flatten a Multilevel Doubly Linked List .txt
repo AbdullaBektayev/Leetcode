@@ -1,0 +1,39 @@
+https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* prev;
+    Node* next;
+    Node* child;
+
+    Node() {}
+
+    Node(int _val, Node* _prev, Node* _next, Node* _child) {
+        val = _val;
+        prev = _prev;
+        next = _next;
+        child = _child;
+    }
+};
+*/
+class Solution {
+private:
+    Node* temp = nullptr;
+public:
+    Node* flatten(Node* head) {
+        if(!head){return nullptr;}
+        if(temp){
+            temp->child = nullptr;
+            temp->next = head;
+            head->prev = temp;
+        }
+        temp = head;
+        Node* n = head->next;
+        flatten(temp->child);
+        flatten(n);
+        return head;
+    }
+};

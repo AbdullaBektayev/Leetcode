@@ -1,0 +1,27 @@
+https://leetcode.com/problems/find-the-difference/submissions/
+
+
+
+
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        
+    int let[26] = {0};
+    for(int i = 0; i < t.length(); i++){
+        int a = (int)t[i] - 97;
+        let[a]++;
+        if(i != t.length() - 1){
+            int b = (int)s[i] - 97;
+            let[b]--;
+        }
+    }
+    
+    for(int i = 0; i < 26; i++){
+        if(let[i] != 0){
+            return (char)(i + 97);
+        }
+    }
+        return 'a';
+    }
+};

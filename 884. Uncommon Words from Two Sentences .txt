@@ -1,0 +1,46 @@
+https://leetcode.com/problems/uncommon-words-from-two-sentences/
+
+class Solution {
+public:
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        vector<string> a;
+    vector<string> b;
+    int n = 0;
+    for(int i = 0; i < s1.length(); i++){
+        if(s1[i] == ' '){
+            a.push_back(s1.substr(n,i-n));
+            n = i+1;
+        }
+        else if(i == s1.length()-1){
+            a.push_back(s1.substr(n,i-n+1));
+        }
+    }
+    n = 0;
+    for(int i = 0; i < s2.length(); i++){
+        if(s2[i] == ' '){
+            a.push_back(s2.substr(n,i-n));
+            n = i+1;
+        }
+        else if(i == s2.length()-1){
+            a.push_back(s2.substr(n,i-n+1));
+        }
+    }
+    
+    
+    for(int i = 0; i< a.size(); i++){
+        bool w = true;
+        for(int j = i + 1; j < a.size(); j++){
+            if(a[i] == a[j]){
+                a.erase(a.begin() + j);
+                w = false;
+                j--;
+            }
+        }
+        if(w){
+            b.push_back(a[i]);
+        }
+    }
+    
+    return b;
+    }
+};

@@ -1,0 +1,39 @@
+https://leetcode.com/problems/min-stack/
+
+
+
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    vector<int> vec;
+    multiset<int> m;
+    MinStack() {
+    }
+    
+    void push(int x) {
+        vec.push_back(x);
+        m.insert(x);
+    }
+    
+    void pop() {
+        m.erase(m.find(vec.back()));
+        vec.pop_back();
+    }
+    
+    int top() {
+        return vec.back();
+    }
+    
+    int getMin() {
+        return *m.begin();
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */

@@ -1,0 +1,26 @@
+https://leetcode.com/problems/reverse-only-letters/
+
+class Solution {
+public:
+    string reverseOnlyLetters(string s) {
+    
+    int i = 0;
+    int j = s.length()-1;
+    while (i <= j) {
+        while(!(((int)s[i] >64 && (int)s[i] < 91) ||((int)s[i] > 96 && (int)s[i] < 123)) && i<s.size()){
+            i++;
+            continue;
+        }
+        if(!((int)(s[j] >64 && (int)s[j] < 91) ||((int)s[j] > 96 && (int)s[j] <123))){
+            j--;
+            continue;
+        }
+        char a = s[i];
+        s[i] = s[j];
+        s[j] = a;
+        j--;
+        i++;
+    }
+    return s;
+    }
+};

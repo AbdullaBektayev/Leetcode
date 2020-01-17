@@ -1,0 +1,22 @@
+https://leetcode.com/problems/4sum-ii/
+
+
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int,int> map;
+        for(int i = 0; i < A.size(); i++){
+            for(int j = 0; j < B.size(); j++){
+                map[-(A[i] + B[j])]++;
+            }
+        }
+        int sum = 0;
+        for(int i = 0; i < C.size(); i++){
+            for(int j = 0; j < D.size(); j++){
+                if(map.count(C[i] + D[j])){sum+=map[C[i] + D[j]];}
+            }
+        }
+        
+        return sum;
+    }
+};

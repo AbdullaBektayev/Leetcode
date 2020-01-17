@@ -1,0 +1,47 @@
+https://leetcode.com/problems/replace-words/
+
+class Solution {
+private:
+    struct Trie{
+        Trie* data[26];
+        string word = "";
+    };
+    Trie* head = new Trie();
+    
+    void insert(string s){
+        Trie* cur = head;
+        for(char c : s){
+            int in = c - 'a';
+            if(!cur->data[in]){cur->data[in] = new Trie();}
+            cur = cur->data[in];
+        }
+        cur->word = s;
+    }
+    
+    string serach(string str){
+        Trie* cur = head;
+        for(char s : str){
+            int in = s - 'a';
+            if(cur->word != ""){return cur->word;}
+            else if(!cur->data[in]){return str;}
+            cur = cur->data[in];
+        }
+        return str;
+    }
+public:
+    string replaceWords(vector<string>& dict, string sentence) {
+        if(sentence.length() == 0){return "";}
+        string res = "";
+        for(string s : dict){insert(s);}
+        for(int i = 0 ; i < sentence.length(); i++){
+            int start = i;
+            while(i < sentence.length() && sentence[i] != ' '){
+                i++;
+            }
+            res += serach(sentence.substr(start, i - start));
+            if(i != sentence.length()){res+=" ";}
+        }
+        cout << sentence.length();
+        return res;
+    }
+};

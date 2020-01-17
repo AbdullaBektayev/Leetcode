@@ -1,0 +1,15 @@
+https://leetcode.com/problems/excel-sheet-column-number/
+
+
+
+class Solution {
+public:
+    int titleToNumber(string s) { 
+		int len = s.size();
+		int number = 0;
+		for (int i = len; i > 0; i--) {
+			number += (int)(s[i - 1] - 'A'+1)* pow(26,(len-i));
+		}
+		return number;}
+    
+};

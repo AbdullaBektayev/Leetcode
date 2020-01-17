@@ -1,0 +1,22 @@
+https://leetcode.com/problems/reverse-bits/
+
+
+
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        long long fr = n;
+        int arr[32];
+        for(int i = 0; i < 32; i++){
+            arr[i] = fr%2;
+            fr /= 2;
+        }
+        long long sec = 0;
+        for(int i = 0; i < 32; i++){
+            sec *= 2;
+            sec += arr[i];
+        }
+        
+        return sec;
+    }
+};

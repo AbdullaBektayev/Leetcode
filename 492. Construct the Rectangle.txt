@@ -1,0 +1,46 @@
+https://leetcode.com/problems/construct-the-rectangle/submissions/
+
+
+
+
+class Solution {
+public:
+    int Prime(unsigned long a, unsigned long i)
+{
+    return i*i <= a ? (a%i) && Prime(a, i + 1) : 1;
+}
+    
+    vector<int> constructRectangle(int area) {
+        
+    int w = 1;
+    int l = area;
+    vector<int> v;
+    bool f = false;
+    
+    bool bo = Prime(area,2);
+    if(bo){
+        v.push_back(l);
+        v.push_back(w);
+        return v;
+    } 
+    
+    while(l > w){
+        l--;
+        while (area%l != 0 && l <= area/l) {
+            l--;
+        }
+        if(l <= area/l){
+            while (area%l != 0) {
+                l++;
+            }
+            w = area/l;
+            break;
+        }
+    }
+    
+    v.push_back(w);
+    v.push_back(l);
+    
+    return v;
+    }
+};

@@ -1,0 +1,25 @@
+https://leetcode.com/problems/plus-one/
+
+
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        vector<int> res;
+        int pivot = 1;
+        int temp;
+        int i = digits.size() - 1;
+        while(pivot){
+            if(i >= 0){temp = digits[i] + pivot;}
+            else{temp = pivot;}
+            res.push_back(temp%10);
+            pivot = temp/10;
+            i--;
+        }
+        while(i >= 0){
+            res.push_back(digits[i]);
+            i--;
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};

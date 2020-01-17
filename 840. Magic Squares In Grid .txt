@@ -1,0 +1,88 @@
+https://leetcode.com/problems/magic-squares-in-grid/
+
+
+class Solution {
+public:
+   bool check(vector<vector<int>> v){
+    int a[3] = {0};
+    int b[3] = {0};
+    int c = 0;
+    int d = 0;
+    
+    bool bo = true;
+    int t  = v[0][0];
+    for(int i = 0; i < v.size(); i++){
+        for(int j = 0; j < v[i].size(); j++){
+            if(t != v[i][j]){
+                bo = false;
+                break;
+            }
+        }
+    }
+    
+    if(bo){
+        return 0;
+    }
+    
+    
+    for(int i = 0; i < v.size(); i++){
+        for(int j = 0; j < v[i].size();j++){
+            b[i]+= v[i][j];
+            a[i]+= v[j][i];
+            if(v[i][j] < 1 || v[i][j] > 9){
+                return false;
+            }
+        }
+        if(i != 0 && (a[i -1 ] != a[i] || b[i - 1] != b[i])){
+            return false;
+        }
+        c+= v[i][i];
+        d+= v[2-i][2-i];
+    }
+    
+    if(a[0] == b[0] && b[0] == c && c == d){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+    
+    
+    int numMagicSquaresInside(vector<vector<int>>& v) {
+        if(v.size() < 3 || v[0].size() < 3 ){
+            return 0;
+        }
+        vector<vector<int>> w(3,(vector<int>(3)));
+    int a = 2;
+    int b = 3;
+    int b1 = 0;
+    int c = 0;
+    int d = 3;
+    int d1 = 0;
+    for(int i = b1; i < b; i++){
+        for(int j = d1; j < d; j++){
+            w[i - b1][j - d1] = v[i][j];
+            if(i == b - 1 && j == d - 1){
+                if(check(w)){
+                    c++;
+                }
+                if(d != v[i].size()){
+                    i = b1;
+                    d1++;
+                    d++;
+                    j = d1 - 1;
+                }
+            }
+        }
+        if(b != v.size() && i == b - 1){
+            d1 = 0;
+            d = 3;
+            b1++;
+            b++;
+            i = b1 - 1;
+        }
+    }
+        return c;
+    }
+};

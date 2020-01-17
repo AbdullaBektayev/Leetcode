@@ -1,0 +1,47 @@
+https://leetcode.com/problems/monotonic-array/
+
+
+class Solution {
+public:
+    bool isMonotonic(vector<int>& a) {
+    bool dec = false;
+    bool in = false;
+    bool b = false;
+    if(a.size() == 1){
+        return true;
+    }
+    for(int i = 0; i < a.size()-1; i++){
+        if(a[i] > a[i+1]){
+            dec = true;
+            break;
+        }
+        else if(a[i] < a[i+1]){
+            in = true;
+            break;
+        }
+        else{
+            b = true;
+        }
+    }
+    
+    if(dec == false && in == false){
+        return b;
+    }
+    else{
+        for(int i =0 ; i < a.size()-1; i++){
+            if(dec == true && a[i] < a[i + 1]){
+                b = false;
+                break;
+            }
+            if(in == true && a[i] > a[i+1]){
+                b = false;
+                break;
+            }
+            if(i == a.size() - 2){
+                b = true;
+            }
+        }
+    }
+    return b;
+    }
+};

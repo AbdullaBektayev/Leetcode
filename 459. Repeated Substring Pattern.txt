@@ -1,0 +1,11 @@
+https://leetcode.com/problems/repeated-substring-pattern/
+
+
+
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        string str = s.substr(1,s.length()-1) + s.substr(0,s.length()-1);
+        return str.find(s) != string :: npos;
+    }
+};

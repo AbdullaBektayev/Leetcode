@@ -1,0 +1,26 @@
+https://leetcode.com/problems/reshape-the-matrix/
+
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& a, int row, int coulmn) {
+        vector<vector<int>> b(row,vector<int>(coulmn)) ;
+    if(a.size() * a[0].size() == row * coulmn){
+        int n = 0;
+        int m = 0;
+        for(int i =0; i < row; i++ ){
+            for(int j = 0; j < coulmn; j++){
+                b[i][j] = a[n][m];
+                m++;
+                if(m >= a[0].size()){
+                    n++;
+                    m=0;
+                }
+            }
+        }
+        return b;
+    }
+    else{
+        return a;
+    }
+    }
+};

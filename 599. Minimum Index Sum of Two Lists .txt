@@ -1,0 +1,29 @@
+https://leetcode.com/problems/minimum-index-sum-of-two-lists/
+
+class Solution {
+public:
+    vector<string> findRestaurant(vector<string>& list1, vector<string>& list2) {
+        unordered_map<string, int> map;
+        vector<string> res;
+        
+        for(int i = 0; i < list1.size(); i++){
+            map[list1[i]] = i;
+        }
+        int min = INT_MAX;
+        int sum;
+        for(int i = 0; i < list2.size(); i++){
+            if(map.count(list2[i])){
+                sum = map[list2[i]] + i;
+                if(sum < min){
+                    min = sum;
+                    res = {list2[i]};
+                }
+                else if(min == sum){
+                    res.push_back(list2[i]);
+                }
+            }
+        }
+               
+        return res;
+    }
+};

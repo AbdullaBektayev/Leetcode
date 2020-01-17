@@ -1,0 +1,30 @@
+https://leetcode.com/problems/valid-palindrome-ii/
+
+class Solution {
+public:
+    bool cheak(string s){
+        for(int i = 0; i < (s.length() + 1)/2 ; i++){
+            if(s[i] != s[s.length() - 1 - i]){
+                return false;
+            }
+        }
+        return true;
+    };
+    
+    bool validPalindrome(string s) { 
+    string str = s;
+    for(int i = 0; i < (s.length() + 1)/2 ; i++){
+        if(s[i] != s[s.length() - 1 - i]){
+            str.erase(str.begin() + str.length() - 1 - i);
+            s.erase(s.begin() + i);
+            if(cheak(str) || cheak(s)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+        return true;
+    }
+};

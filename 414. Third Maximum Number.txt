@@ -1,0 +1,30 @@
+https://leetcode.com/submissions/detail/242067136/
+
+
+
+
+
+
+class Solution {
+public:
+    int thirdMax(vector<int>& v) {
+    sort(v.begin(), v.end());
+    vector<int> v1;
+    vector<int> v2;
+    int max = v[0];
+    v1.push_back(max);
+    for(int i = 1; i < v.size(); i++){
+        if(max < v[i]){
+            max = v[i];
+            v1.push_back(max);
+        }
+    }
+    
+    if(v1.size() < 3){
+        return v1[v1.size() - 1];
+    }
+    else{
+        return v1[v1.size() - 3];
+    }
+    }
+};
