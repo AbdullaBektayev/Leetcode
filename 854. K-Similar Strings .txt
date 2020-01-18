@@ -1,0 +1,34 @@
+https://leetcode.com/problems/k-similar-strings/
+
+
+class Solution {
+private:
+    int minA = INT_MAX;
+    unordered_map<string,int> map;
+    void sim(string &A, string &B,int idx,int count){
+        if(A == B){
+            minA = min(minA,count);
+            return;
+        }
+        if(idx == A.length() || (map.count(A) && map[A] <= count)){
+            return;
+        }
+        while(idx < A.length() && A[idx] == B[idx])
+            idx++;
+        for(int i = idx+1;i < A.length(); i++){
+            if(A[i] == B[i] || A[i] != B[idx])
+                continue;
+            swap(A[idx],A[i]);
+            sim(A,B,idx + 1,count+1);
+            swap(A[idx],A[i]);
+        }
+        map[A] = count;
+    }
+public:
+    int kSimilarity(string A, string B) {
+        if(A.length() == 1)
+            return 0;
+        sim(A,B,0,0);
+        return minA;
+    }
+};
