@@ -1,0 +1,50 @@
+https://leetcode.com/problems/find-in-mountain-array/submissions/
+
+
+/**
+ * // This is the MountainArray's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class MountainArray {
+ *   public:
+ *     int get(int index);
+ *     int length();
+ * };
+ */
+class Solution {
+private:
+    int search(MountainArray &mount,int tar,int low,int high,bool ToF){
+        if(low > high){return -1;}
+        int mid = (low + high)/2;
+        int val = mount.get(mid);
+        if(val == tar){return mid;}
+        else if(val > tar){return ToF ? search(mount,tar,low,mid-1,ToF) : search(mount,tar,mid + 1,high,ToF);}
+        else{return ToF ? search(mount,tar,mid + 1,high,ToF) : search(mount,tar,low,mid-1,ToF);}
+    }
+public:
+    int findInMountainArray(int target, MountainArray &mount) {
+        int low = 0;
+        int high = mount.length() - 1;
+        int size =  mount.length();
+        while(low < high){
+            int mid = (low + high)/2;
+            int mid1 = mid - 1;
+            int cen_val = mount.get(mid);
+            int mid2 = mid + 1;
+            if(mid > 0 && mount.get(mid1) < cen_val  && mid < size-1 && cen_val > mount.get(mid2)){
+                low = mid;
+                break;
+            }
+            if(mid > 0 && mount.get(mid1) < cen_val){
+                low = mid;
+            }
+            else{
+                high = mid; 
+            }
+        }
+        
+        int left = search(mount,target,0,low,true);
+        int right = search(mount,target,low,size-1,false);
+        if(left != -1){return left;}
+        else {return right;}
+    }
+};
