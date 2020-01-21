@@ -1,0 +1,58 @@
+https://leetcode.com/problems/vowel-spellchecker/
+
+
+class Solution {
+private:
+    string low(string word){
+        for(int i = 0; i < word.length(); i++){
+            if(word[i] < 'a'){
+                word[i] = word[i] + 32;
+            }
+        }
+        return word;
+    }
+    
+    string devowel(string word){
+        for(int i = 0; i < word.length(); i++){
+            if(isVowel(word[i])){
+                word[i] = '*';
+            }
+        }
+        return word;
+    }
+    
+    bool isVowel(char c){
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+    }
+    
+public:
+    vector<string> spellchecker(vector<string>& wordlist, vector<string>& queries) {
+        unordered_set<string> perfect;
+        unordered_map<string,string> lower;
+        unordered_map<string,string> vowel;
+        for(auto word : wordlist){
+            string low_w = low(word);
+            string vow_w = devowel(low_w);
+            
+            perfect.insert(word);
+            if(!lower.count(low_w))
+                lower[low_w] = word;
+            if(!vowel.count(vow_w))
+                vowel[vow_w] = word;
+        }
+        
+        vector<string> res;
+        
+        for(auto word : queries){
+            string low_w = low(word);
+            string vow_w = devowel(low_w);
+            
+            if(perfect.count(word)){res.push_back(word);}
+            else if(lower.count(low_w)){res.push_back(lower[low_w]);}
+            else if(vowel.count(vow_w)){res.push_back(vowel[vow_w]);}
+            else{res.push_back("");}
+        }
+        
+        return res;
+    }
+};
