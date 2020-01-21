@@ -1,0 +1,31 @@
+https://leetcode.com/problems/find-and-replace-in-string/submissions/
+
+
+
+class Solution {
+private:
+public:
+    string findReplaceString(string S, vector<int>& index, vector<string>& sources, vector<string>& targets) {
+        string res ="";
+        vector<int> map(S.length(),-1);
+        for(int i = 0 ;i < index.size(); i++){
+            if(S.substr(index[i],sources[i].length()) == sources[i])
+                map[index[i]] = i;
+        }
+        int size = S.length();
+        int i = 0;
+        while(i < size){
+            if(map[i] >= 0){
+                //cout << map[i]<<"  ";
+                res += targets[map[i]];
+                i += sources[map[i]].length();
+            }
+            else{
+                res += S[i];
+                i++;
+            }
+        }
+        
+        return res;
+    }
+};
