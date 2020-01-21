@@ -1,0 +1,43 @@
+https://leetcode.com/problems/fraction-to-recurring-decimal/
+
+
+class Solution {
+public:
+    string fractionToDecimal(int numerator, int denominator) {
+        if(numerator == 0)
+            return "0";
+        
+        string res = "";
+        
+        if(numerator < 0 ^ denominator < 0){
+            res += "-";
+        }
+        
+        long long num = numerator;
+        long long den = denominator;
+        
+        num = abs(num);
+        den = abs(den);
+        long long left = (num%den);
+        res += to_string(num/den);
+        unordered_map<int,int> map;
+        
+        if(left == 0){
+            return res;
+        }
+        res += ".";
+        while(left > 0){
+            if(map.count(left)){
+                res.insert(map[left],"(");
+                res += ")";
+                break;
+            }
+            map[left] = res.size();
+            left*=10;
+            res += to_string(left/den);
+            left = left%den;
+            //cout << left;
+        }
+        return res;
+    }
+};
