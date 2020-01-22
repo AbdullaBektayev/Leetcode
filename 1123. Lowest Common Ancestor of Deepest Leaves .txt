@@ -1,0 +1,37 @@
+https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+    pair<TreeNode*,int> find(TreeNode* root){
+        if(root == nullptr){
+            return {nullptr,0};
+        }
+        
+        auto l = find(root->left);
+        auto r = find(root->right);
+        
+        if(l.second == r.second){return {root,l.second+1};}
+        else if(l.second > r.second){
+            l.second++;
+            return l;
+        }
+        else{
+            r.second++;
+            return r;
+        }
+    }
+public:
+    TreeNode* lcaDeepestLeaves(TreeNode* root) {
+        auto f = find(root);
+        return f.first;
+    }
+};
