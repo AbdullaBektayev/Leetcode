@@ -1,0 +1,31 @@
+https://leetcode.com/problems/partition-equal-subset-sum
+
+
+class Solution {
+private:
+    unordered_map<int,bool> map;
+    bool sumpar(vector<int>& nums, int idx,int target){
+        if(target == 0){return true;}
+        if(target < 0 || idx >= nums.size()){return false;}
+        if(map.count(target)){return map[target];}
+        for(idx; idx < nums.size(); idx++){
+            if(sumpar(nums,idx+1,target-nums[idx])){
+                map[target] = true;
+                return true;
+            }
+        }
+        map[target] = false;
+        return false;
+    }
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = 0;
+        for(int i = 0; i < nums.size(); i++){
+            sum+=nums[i];
+        }
+        if(sum%2){return false;}
+        return sumpar(nums,0,sum/2);
+    }
+};
+
+
