@@ -1,2 +1,2 @@
 # Leetcode
-Preparation for Facebook by solving LeetCode problems (229 problems,  Easy 115, Medium 97, Hard 17)
+Preparation for Facebook by solving LeetCode problems (230 problems,  Easy 115, Medium 98, Hard 17)
