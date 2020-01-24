@@ -1,0 +1,49 @@
+https://leetcode.com/problems/exam-room/
+
+
+class ExamRoom {
+public:
+    set<int> place;
+    int size = 0;
+    ExamRoom(int N) {
+        size = N;
+    }
+    
+    int seat() {
+        if(place.empty()){
+            place.insert(0);
+            return 0;
+        }
+        int prev = place.count(0) ? 0 : -*place.begin();
+        int student = 0;
+        int dif = 0,cur;
+        for(auto it = place.begin(); it != place.end(); ++it){
+            //if(prev != -1){
+                cur = (*it - prev)/2;
+                if(cur > dif){
+                    student = cur + prev;
+                    dif = cur;
+                }
+           // }
+            prev = *it;
+        }
+        
+        cur = (size-1 - prev);
+        if(cur > dif){
+            student = size-1;
+        }
+        place.insert(student);
+        return student;
+    }
+    
+    void leave(int p) {
+        place.erase(p);
+    }
+};
+
+/**
+ * Your ExamRoom object will be instantiated and called as such:
+ * ExamRoom* obj = new ExamRoom(N);
+ * int param_1 = obj->seat();
+ * obj->leave(p);
+ */
