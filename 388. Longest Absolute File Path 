@@ -1,0 +1,32 @@
+https://leetcode.com/problems/longest-absolute-file-path
+
+class Solution {
+public:
+    int lengthLongestPath(string input) {
+        int i = 0;
+        int size = input.size();
+        int max_len = 0;
+        stack<int> st;
+        while(i < size){
+            int j = input.find("\n",i);
+            if(j == string :: npos){j = size;}
+            if(st.empty()){
+                st.push(input.substr(i,j-i).length());
+            }
+            else{
+                st.push(st.top() + input.substr(i,j-i).length() + 1);
+            }
+            int k = input.substr(i,j-i).find(".");
+            if(k != string :: npos){
+                //cout<<"a ";
+                max_len = max(max_len,st.top());
+            }
+            int tabs = 0;
+            j++;
+            while(j < input.size() && input[j] == '\t'){j++;tabs++;}
+            while(tabs + 1 <= st.size()){st.pop();}
+            i = j;
+        }
+        return max_len;
+    }
+};
