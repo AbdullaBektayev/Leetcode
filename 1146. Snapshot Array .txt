@@ -1,0 +1,35 @@
+https://leetcode.com/problems/snapshot-array/
+
+class SnapshotArray {
+public:
+    vector<vector<int>> res;
+    int size = 0;
+    SnapshotArray(int length) {
+        res.resize(length,vector<int>(1,0));
+    }
+    
+    void set(int index, int val) {
+        if(res[index].size() - 1 < size){
+            int temp = res[index][res[index].size()-1];
+            res[index].resize(size + 1,temp);
+        }
+        res[index][size] = val;
+    }
+    
+    int snap() {
+        return size++;
+    }
+    
+    int get(int index, int snap_id) {
+        if(res[index].size() - 1 < snap_id){return res[index][res[index].size() - 1];}
+        else{return res[index][snap_id];}
+    }
+};
+
+/**
+ * Your SnapshotArray object will be instantiated and called as such:
+ * SnapshotArray* obj = new SnapshotArray(length);
+ * obj->set(index,val);
+ * int param_2 = obj->snap();
+ * int param_3 = obj->get(index,snap_id);
+ */
