@@ -1,0 +1,64 @@
+https://leetcode.com/problems/accounts-merge/
+
+
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        vector<vector<string>> res;
+        if(accounts.size() == 0){return res;}
+        sort(accounts.begin(),accounts.end());
+        multimap<string,set<string>> map;
+        
+        for(int i =0 ;i < accounts.size(); i++){
+            if(!map.count(accounts[i][0])){
+                set<string> s;
+                s.insert(accounts[i].begin() + 1,accounts[i].end());
+                map.insert(make_pair(accounts[i][0],s));
+            }
+            else{
+                vector<multimap<string,set<string>> :: iterator> mult; 
+                for(auto it = map.lower_bound(accounts[i][0]); it != map.upper_bound(accounts[i][0]); it++){
+                    for(int j = 1; j < accounts[i].size(); j++){
+                        if(it->second.count(accounts[i][j])){
+                            mult.push_back(it);
+                            break;
+                        }
+                    }
+                }
+                if(mult.size() == 0){
+                    set<string> s;
+                    s.insert(accounts[i].begin() + 1,accounts[i].end());
+                    map.insert(make_pair(accounts[i][0],s));
+                }
+                else if(mult.size() == 1){
+                    mult[0]->second.insert(accounts[i].begin() + 1,accounts[i].end());
+                }
+                else{
+                    set<string> newSet;
+                    newSet.insert(accounts[i].begin() + 1,accounts[i].end());
+                    for(int j = 0; j < mult.size(); j++){
+                        newSet.insert(mult[j]->second.begin(),mult[j]->second.end());
+                    }
+                    
+                    for(int j = 0; j < mult.size(); j++){
+                        map.erase(mult[j]);
+                    }
+                    
+                    map.insert(make_pair(accounts[i][0],newSet));
+                }
+            }
+        }
+        
+        
+        for(auto it = map.begin();it != map.end(); ++it){
+            vector<string> temp;
+            temp.push_back(it->first);
+            for(auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 ){
+                temp.push_back(*it2);
+            }
+            res.push_back(temp);
+        }
+        
+        return res;
+    }
+};

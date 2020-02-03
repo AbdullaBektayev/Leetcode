@@ -1,0 +1,21 @@
+https://leetcode.com/problems/letter-tile-possibilities/
+
+
+
+class Solution {
+private:
+    unordered_set<string> set;
+    
+    void num_tile(string tiles, string cur,int size){
+        if(cur != "")
+            set.insert(cur);
+        for(int i = 0; i < size; i++){
+            num_tile(tiles.substr(0,i) + tiles.substr(i+1,tiles.size()),cur + tiles[i],size-1);
+        }
+    }
+public:
+    int numTilePossibilities(string tiles) {
+        num_tile(tiles,"",tiles.size());
+        return set.size();
+    }
+};

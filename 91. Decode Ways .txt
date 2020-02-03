@@ -1,0 +1,33 @@
+https://leetcode.com/problems/decode-ways/
+
+
+
+class Solution {
+private:
+    int to_int(string s){
+        int a = 0;
+        for(int i =0 ; i < s.length(); i++){
+            a = a*10 + s[i] - '0';
+        }
+        return a;
+    }
+public:
+    int numDecodings(string s) {
+        if(s[0] == '0'){return 0;}
+        if(s.length() < 2){return s.length();}
+        
+        int size = s.length();
+        vector<int> dp(size+1,0);
+        string temp = "";
+        dp[0] = dp[1] = 1;
+        for(int i = 2; i <= size; i++){
+            int sec = to_int(s.substr(i-2,2));
+            int fr = to_int(s.substr(i-1,1));
+            //cout << s.substr(i-2,2)<<"  "<<s.substr(i-1,1)<<endl;
+            sec = (sec > 9 && sec < 27) ? dp[i-2] : 0;
+            fr = (fr > 0 && fr < 10) ? dp[i-1] : 0;
+            dp[i] = fr + sec;
+        }
+        return dp[size];
+    }
+};
